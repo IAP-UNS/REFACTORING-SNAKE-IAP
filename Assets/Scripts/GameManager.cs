@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject wallGraphic, snakeGraphic, fruitGraphic;
+    //public GameObject wallGraphic, snakeGraphic, fruitGraphic;
     private List<GameObject> snakeGraphicParts; //lista de partes de snake (cubitos)
     public GameObject panelPerdiste;
     private GameObject laFrutita;
@@ -68,7 +68,10 @@ public class GameManager : MonoBehaviour
 
         //init fruit
         Vector3Int nuevaPos3 = GetFreePosition();
-        laFrutita = Instantiate(fruitGraphic, nuevaPos3, transform.rotation) as GameObject;
+        //laFrutita = Instantiate(fruitGraphic, nuevaPos3, transform.rotation) as GameObject;
+        laFrutita = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        laFrutita.transform.position = nuevaPos3;
+        laFrutita.GetComponent<Renderer>().material.color = Color.yellow;
         PlaceFrutitaAt(nuevaPos3.x, nuevaPos3.z);
 
         EstirarPlano();
@@ -77,19 +80,6 @@ public class GameManager : MonoBehaviour
     public void EstirarPlano()
     {
         plano.transform.localScale = new Vector3(4, 1, 4);
-    }
-
-
-    private void CheckPlatform()
-    {
-        //muestro controles solo si estoy en android
-        #if UNITY_EDITOR
-                Debug.Log("Unity Editor");
-        #elif UNITY_ANDROID
-                panelAndroid.SetActive(true);
-        #else
-                Debug.Log("Any other platform");
-        #endif
     }
 
 
@@ -177,7 +167,11 @@ public class GameManager : MonoBehaviour
     {
         //ver que onda la ultima posicion
         UpdateTailPosition(ultimaPosicion);
-        GameObject nuevoCubito = Instantiate(snakeGraphic, ultimaPosicion, transform.rotation);
+        //GameObject nuevoCubito = Instantiate(snakeGraphic, ultimaPosicion, transform.rotation);
+        GameObject nuevoCubito = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        nuevoCubito.transform.position = ultimaPosicion;
+        nuevoCubito.GetComponent<Renderer>().material.color = Color.red;
+
         snakeGraphicParts.Insert(0, nuevoCubito);
 
         PlaceSnakePartAt(ultimaPosicion.x, ultimaPosicion.z);
@@ -197,7 +191,10 @@ public class GameManager : MonoBehaviour
     private void CreateNewFruit()
     {
         Vector3Int nuevaPos3 = GetFreePosition();
-        laFrutita = Instantiate(fruitGraphic, nuevaPos3, transform.rotation) as GameObject;
+        //laFrutita = Instantiate(fruitGraphic, nuevaPos3, transform.rotation) as GameObject;
+        laFrutita = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        laFrutita.transform.position = nuevaPos3;
+        laFrutita.GetComponent<Renderer>().material.color = Color.yellow;
         PlaceFrutitaAt(nuevaPos3.x, nuevaPos3.z);
         gotFrutita = true;
     }
@@ -224,7 +221,10 @@ public class GameManager : MonoBehaviour
 
     private void CreateWall(Vector3Int nuevaPos)
     {
-        Instantiate(wallGraphic, nuevaPos, transform.rotation);
+        //Instantiate(wallGraphic, nuevaPos, transform.rotation);
+        GameObject pared = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        pared.transform.position = nuevaPos;
+        pared.GetComponent<Renderer>().material.color = Color.black;
         PlaceWallAt(nuevaPos.x, nuevaPos.z);
     }
 
@@ -239,7 +239,10 @@ public class GameManager : MonoBehaviour
 
     private void AddNewSnakeGraphicPart(Vector3Int nuevaPos)
     {
-        GameObject nuevoSnakePart = Instantiate(snakeGraphic, nuevaPos, transform.rotation) as GameObject;
+        //GameObject nuevoSnakePart = Instantiate(snakeGraphic, nuevaPos, transform.rotation) as GameObject;
+        GameObject nuevoSnakePart = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        nuevoSnakePart.transform.position = nuevaPos;
+        nuevoSnakePart.GetComponent<Renderer>().material.color = Color.red;
         snakeGraphicParts.Add(nuevoSnakePart);
     }
 
